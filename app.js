@@ -12,6 +12,15 @@ var express = require('express')
     , base64url = require('base64url')
     , cryptiles = require('cryptiles');
 
+const Airbrake = require('@airbrake/node');
+const airbrakeExpress = require('@airbrake/node/dist/instrumentation/express');
+
+const airbrake = new Airbrake.Notifier({
+  projectId: process.env.AIRBRAKE_PROJECT_ID,
+  projectKey: process.env.AIRBRAKE_PROJECT_KEY,
+  environment: 'production'
+});
+
 var keys = {};
 
 var provider_friendly_name = {
@@ -29,7 +38,7 @@ var strategy = new Auth0Strategy({
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL: process.env.AUTH0_CALLBACK,
     redirectUri: process.env.AUTH0_CALLBACK,    // <!-- upgrade to Lock 9 -->
-    scope: "openid email profile"                       // <!-- upgrade to Lock 9 -->
+    scope: "openid email profile"               // <!-- upgrade to Lock 9 -->
 }, function(accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)
     // extraParams.id_token has the JSON Web Token
@@ -100,6 +109,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public'), { index: false, redirect: false }));
 app.use(contextualLocals);
+
+// This middleware should be added before any routes are defined:
+app.use(airbrakeExpress.makeMiddleware(airbrake));
 
 app.get('/', function (req, res, next) {
     res.render('home.html');
@@ -317,7 +329,7 @@ function v1_get() {
         res.set('Cache-Control', 'no-cache');
 
         logger.info({ user: req.user ? req.user._json : undefined }, 'sharelock access request');
-        typeof req.user !== 'undefined' ? req.user.provider=req.user._json.sub.match("^.*\\|")[0].replace("\|", "") : 'undefined';
+        typeof req.user !== 'undefined' ? req.user.provider=req.user._json.sub.match("^.*\\|")[0].replace("\|", "") : 'undefined';  // auth0.js V9 does not return req.user.provider
         if (req.user && req.user.provider !== 'twitter' && !req.user._json.email_verified) {
             return res.render('invalid', { details: 'Your e-mail has not been verified'});
         }
@@ -390,7 +402,7 @@ function v1_get() {
                 }
             }
             else if (acl.k === 't') {
-                if (req.user && req.user.provider === 'twitter' && req.user._json.nickname.toLowerCase() === acl.v) {
+                if (req.user && req.user.provider === 'twitter' && req.user._json.nickname.toLowerCase() === acl.v) {    // auth0.js V9 does not return req.user._json.screen_name
                     allowed = true;
                 }
                 else {
