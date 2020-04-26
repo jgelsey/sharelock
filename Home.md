@@ -55,10 +55,10 @@ The service requires several environment variables to be set (all of them are re
 | AUTH0_CLIENT_ID | The Auth0 client ID obtained from [Auth0](https://auth0.com) |
 | AUTH0_CLIENT_SECRET| The Auth0 client secret obtained from [Auth0](https://auth0.com) |
 | AUTH0_CALLBACK | The callback URL specified when creating the [Auth0](https://auth0.com) application. In production it may look like *https://sharelock.io/callback*. In development it may be *http://localhost:3000/callback*. |
-| SIGNATURE_KEY_1 | A secret key that will be used to sign your sharelock. You can generate one with `openssl rand 32 -hex`. |
-| ENCRYPTION_KEY_1 | A secret key that will be used to encrypt your sharelock. You can generate one with `openssl rand 32 -hex`. |
+| SIGNATURE_KEY_1 | A secret key that will be used to sign your sharelock. You can generate one with `openssl rand -hex 32`. |
+| ENCRYPTION_KEY_1 | A secret key that will be used to encrypt your sharelock. You can generate one with `openssl rand -hex 32`. |
 | CURRENT_KEY | Specify `1`. More on this below. |
-| COOKIE_SECRET | A secret key to protect web application UI HTTP cookies with. You can generate one with `openssl rand 32 -hex`. |
+| COOKIE_SECRET | A secret key to protect web application UI HTTP cookies with. You can generate one with `openssl rand -hex 32`. |
 | FORCE_HTTPS | Specify 1 to redirect all HTTP requests to corresponding HTTPS endpoints. It is recommended to use `1` for production deployment. The value of `0` is useful during development when there is no HTTPS terminating proxy. |
 | GA_PROPERTY_ID | Optional. Specify the Google Analytics property ID to hook up Google Analytics to the web UI. |
 | PORT | Optional. Specify the port to listen on. Specific hosting environments like Heroku or Windows Azure Web Sites will provide this envronment property for you. If not specified (e.g. during development), the default value is *3000*. |
@@ -70,7 +70,7 @@ During development, you can provide all these environment variables through the 
 Sharelocks created by the service are signed and encrypted with a pair of keys (one for signing, another for encryption). These need to be 256 bit keys and are best generated with:
 
 ```
-openssl rand 32 -hex
+openssl rand -hex 32
 ```
 
 The Sharelock service supports decrypting and signature verification with any number of historical signing and encryption key pairs. This allows you to revoke a specific key pair in case it had been compromised. Each signing and encryption key pair is specified with a pair of environment variables: 
