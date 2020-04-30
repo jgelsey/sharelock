@@ -25,7 +25,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
+      "url": "https://opensource.org/licenses/MIT"
     }
   ],
   "dependencies": {
@@ -45,12 +45,12 @@
     "serve-favicon": "^2.5.0",
     "swig": "1.4.2"
   },
-  "homepage": "http://github.com/auth0/sharelock",
+  "homepage": "http://github.com/jgelsey/sharelock",
   "repository": {
     "type": "git",
-    "url": "git@github.com:auth0/sharelock.git"
+    "url": "git@github.com:jgelsey/sharelock.git"
   },
   "bugs": {
-    "url": "http://github.com/auth0/sharelock/issues"
+    "url": "http://github.com/jgelsey/sharelock/issues"
   }
 }
