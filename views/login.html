@@ -23,6 +23,7 @@
           <a class="{{ provider }} waves-effect waves-light btn" href="#" {% if (providers.preferred[0] === provider) %} style="margin-bottom: 50px" {% endif %}>SIGN IN WITH {{ provider_friendly_name[provider] }}</a>
         {% endfor %}
       {% else %}
+        <a class="apple waves-effect waves-light btn" href="#">SIGN IN WITH APPLE</a>
         <a class="facebook waves-effect waves-light btn" href="#">SIGN IN WITH FACEBOOK</a>
         <a class="google-oauth2 waves-effect waves-light btn" href="#">SIGN IN WITH GOOGLE</a>
         <a class="twitter waves-effect waves-light btn" href="#">SIGN IN WITH TWITTER</a>
@@ -47,6 +48,14 @@
     redirectUri:  '{{auth0_callback}}',       // <!-- upgrade to Lock 9 -->    
     responseType: 'token id_token',           // <!-- upgrade to Lock 9 -->    
     callbackOnLocationHash: false
+  });
+
+$('.btns .apple').click(function(e) {
+    e.preventDefault();
+
+    webAuth.authorize({     
+      connection: 'apple'
+    });
   });
 
   $('.btns .facebook').click(function(e) {
