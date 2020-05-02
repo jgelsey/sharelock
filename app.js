@@ -173,6 +173,10 @@ app.post('/create',
     bodyParser.urlencoded({ extended: false }),
     current_create());
 
+app.get('/pingdom', function(req,res,next){
+    res.render('pingdom.html');
+})
+
 // app.get('/test/500', function(req, res, next) {
 //     if (app.get('env') === 'development') {
 //         throw new Error('Internal Server Error');
