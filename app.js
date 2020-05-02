@@ -4,6 +4,7 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
     , session = require('express-session')
+    , MemoryStore = require('memorystore')(session)
     , passport = require('passport')
     , swig = require('swig')
     , Auth0Strategy = require('passport-auth0')
@@ -112,7 +113,15 @@ if (process.env.FORCE_HTTPS === '1') {
 }
 
 app.use(cookieParser());
-app.use(session({ secret: process.env.COOKIE_SECRET, resave: false, saveUninitialized: true }));
+app.use(session({ 
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: process.env.COOKIE_SECRET, 
+    resave: false, 
+    saveUninitialized: true 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public'), { index: false, redirect: false }));
