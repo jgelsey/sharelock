@@ -22,13 +22,23 @@ const airbrake = new Airbrake.Notifier({
   environment: 'production'
 });
 
-airbrake.addFilter((notice) => {
-  if (notice.context.route==='/pingdom') {
-    // Ignore errors from admin sessions.
+// Airbrake.add_performance_filter do |resource|
+//   resource.ignore! if resource.route =~ %r{/health_check}
+// end
+
+airbrake.addFilter(function(resource) { //attempt to add an airbrake filter to the performance reporting
+    // console.error("resource: ", resource);
+    // logger.warn("resource: ", resource);
+    if (resource.route == '/pingdom') {
+        resource.ignore=1;
+        console.log("resource.route :",resource.route);
+    }
     return null;
   }
-  return notice;
-});
+  );
+
+// console.log("Airbrake: ", Airbrake);
+// console.log("airbrake._filters.nodeFilter: ", airbrake._filters.nodeFilter);
 
 var keys = {};
 
@@ -129,6 +139,7 @@ app.use(contextualLocals);
 
 // This middleware should be added before any routes are defined:
 app.use(airbrakeExpress.makeMiddleware(airbrake));
+app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
 app.get('/', function (req, res, next) {
     res.render('home.html');
