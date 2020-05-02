@@ -253,7 +253,7 @@ img{
 
 #header {
   height: 220px;
-  background: #eb5424;
+  background: #0b5424;
   position: relative;
   box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.12), 0px 2px 2px 0px rgba(0,0,0,0.24);
 }
@@ -281,12 +281,12 @@ img{
 }
 
 #logo {
-  width: 180px;
-  height: 40px;
+  width: 200px;
+  height: 60px;
   display: block;
   cursor: pointer;
   text-indent: -9999em;
-  background: url(../images/logo.svg) no-repeat;
+  background: url(../images/baby-sink.png) no-repeat;
   position: absolute;
   top: 63px;
   left: 49px;
