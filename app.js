@@ -21,6 +21,14 @@ const airbrake = new Airbrake.Notifier({
   environment: 'production'
 });
 
+airbrake.addFilter((notice) => {
+  if (notice.context.route==='/pingdom') {
+    // Ignore errors from admin sessions.
+    return null;
+  }
+  return notice;
+});
+
 var keys = {};
 
 var provider_friendly_name = {
