@@ -25,8 +25,8 @@ app.set('port', process.env.PORT || 3000);
 if(process.env.FORCE_HTTPS==1) {
 	// serve the API with signed certificate on 443 (SSL/HTTPS) port
 	const httpsServer = https.createServer({
-	  key: fs.readFileSync('server.key'),       //('/etc/letsencrypt/live/my_api_url/privkey.pem'),
-	  cert: fs.readFileSync('server.cert')		 //('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
+	  key: fs.readFileSync('/etc/letsencrypt/live/sharelock.gelsey.com//privkey.pem'),
+	  cert: fs.readFileSync('/etc/letsencrypt/live/sharelock.gelsey.com/fullchain.pem'),
 	}, app);
 
 	logger.info({ port: app.get('port') }, 'setting up secure HTTPS listener');
