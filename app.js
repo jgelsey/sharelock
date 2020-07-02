@@ -42,7 +42,7 @@ airbrake.addFilter(function(resource) { //attempt to add an airbrake filter to t
 
 
 var ua = require('universal-analytics');
-var visitor = ua('UA-112403347-2');
+var visitor = ua(process.env.UA);
 visitor.pageview("/", "https://sharelock.gelsey.com", "Securely share data").send();
 visitor.pageview("/new", "https://sharelock.gelsey.com/new", "Create sharelock").send();
 

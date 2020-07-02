@@ -9,7 +9,8 @@ require('dotenv').config();
 'AUTH0_CLIENT_SECRET',
 'COOKIE_SECRET',
 'FORCE_HTTPS',
-'PORT'
+'PORT',
+'UA'
 ].forEach(function (v) { 
     require('assert').ok(process.env[v] !== undefined, v + ' environment variable not set.'); 
 });
