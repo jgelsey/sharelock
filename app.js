@@ -40,6 +40,12 @@ airbrake.addFilter(function(resource) { //attempt to add an airbrake filter to t
 // console.log("Airbrake: ", Airbrake);
 // console.log("airbrake._filters.nodeFilter: ", airbrake._filters.nodeFilter);
 
+
+var ua = require('universal-analytics');
+var visitor = ua('UA-112403347-2');
+visitor.pageview("/", "https://sharelock.gelsey.com", "Securely share data").send();
+visitor.pageview("/new", "https://sharelock.gelsey.com/new", "Create sharelock").send();
+
 var keys = {};
 
 var provider_friendly_name = {
@@ -142,34 +148,42 @@ app.use(airbrakeExpress.makeMiddleware(airbrake));
 app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
 app.get('/', function (req, res, next) {
+    visitor.pageview("/", "https://sharelock.gelsey.com", "Securely share data").send();
     res.render('home.html');
 });
 
 app.get('/home', function(req,res,next){
+    visitor.pageview("/home", "https://sharelock.gelsey.com/home", "Securely share data").send();
     res.redirect('/');
 })
 
 app.get('/download', function(req,res,next){
+    visitor.pageview("/download", "https://sharelock.gelsey.com/download", "Download").send();
     res.render('download.html');
 })
 
 app.get('/tos', function(req,res,next){
+    visitor.pageview("/tos", "https://sharelock.gelsey.com/tos", "TOS").send();
     res.render('tos.html');
 })
 
 app.get('/about', function(req,res,next){
+    visitor.pageview("/about", "https://sharelock.gelsey.com/about", "About").send();
     res.render('about.html');
 })
 
 app.get('/security', function(req,res,next){
+    visitor.pageview("/security", "https://sharelock.gelsey.com/security", "Security").send();
     res.render('security.html');
 })
 
 app.get('/privacy', function(req,res,next){
+    visitor.pageview("/privacy", "https://sharelock.gelsey.com/privacy", "Privacy").send();
     res.render('privacy.html');
 })
 
 app.get('/cookies', function(req,res,next){
+    visitor.pageview("/cookies", "https://sharelock.gelsey.com/cookies", "Cookies").send();
     res.render('cookies.html');
 })
 
@@ -188,11 +202,13 @@ app.get('/callback',
 
 app.get('/logout',
     function (req, res, next) {
+        visitor.pageview("/logout", "https://sharelock.gelsey.com/logout", "Logout").send();
         req.session.destroy();
         res.redirect(req.query.r || '/');
     });
 
 app.get('/new', function (req, res, next) {
+    visitor.pageview("/new", "https://sharelock.gelsey.com/new", "Create sharelock").send();
     res.render('new');
 });
 
