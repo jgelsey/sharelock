@@ -13,6 +13,8 @@ var express = require('express')
     , base64url = require('base64url')
     , cryptiles = require('cryptiles');
 
+const axios = require('axios');
+
 const Airbrake = require('@airbrake/node');
 const airbrakeExpress = require('@airbrake/node/dist/instrumentation/express');
 
@@ -220,6 +222,28 @@ app.post('/create',
 app.get('/pingdom', function(req,res,next){
     res.render('pingdom.html');
 })
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/coffeecoffee', function(req,res,next){
+    console.log("/coffee called with req.query: ",req.query);
+    // console.log("/coffee called with req.query: ",req.query);
+
+    res.status(200).send('coffee: '+req.query);
+
+    axios.post('http://bme680.local:3001/coffee', {
+      grams: req.query.grams
+    })
+    .then((res) => {
+      console.log(`statusCode: ${res.statusCode}`);
+      // console.log(res);
+    })
+    .catch((error) => {
+      console.error("error is: ",error)
+    })
+
+})
+
 
 // app.get('/test/500', function(req, res, next) {
 //     if (app.get('env') === 'development') {
