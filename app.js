@@ -235,17 +235,19 @@ app.post('/coffeecoffee', function(req,res,next){
 
     res.status(200).send('coffee: '+req.query);
 
-    axios.post('http://bme680.local:3001/coffee', {
-      // grams: req.query.grams
-      grams: req.body.queryResult.parameters.weight.amount
-    })
-    .then((res) => {
-      console.log(`statusCode: ${res.statusCode}`);
-      // console.log(res);
-    })
-    .catch((error) => {
-      console.error("error is: ",error)
-    })
+    if (typeof req.body.queryResult.parameters.weight.amount != 'undefined') 
+        axios.post('http://bme680.local:3001/coffee', {
+          // grams: req.query.grams
+          grams: req.body.queryResult.parameters.weight.amount
+        })
+        .then((res) => {
+          console.log(`statusCode: ${res.statusCode}`);
+          // console.log(res);
+        })
+        .catch((error) => {
+          console.error("error is: ",error)
+        })
+    else ("console.log req.body.queryResult.parameters.weight.amount is undefined: ",req.body.queryResult.parameters.weight.amount)
 
 })
 
@@ -258,8 +260,6 @@ app.post('/coffeecoffee', function(req,res,next){
 
 app.get(/^\/(\w{1,10})\/(.+)$/,
     v1_get());
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
