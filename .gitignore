@@ -11,4 +11,4 @@ auth0-server.sublime-workspace
 azure.err
 server.cert
 server.key
-
+.env

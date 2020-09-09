@@ -223,16 +223,21 @@ app.get('/pingdom', function(req,res,next){
     res.render('pingdom.html');
 })
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/coffeecoffee', function(req,res,next){
-    console.log("/coffee called with req.query: ",req.query);
+    // console.log("/coffeecoffee called with req.query: ",req.query," and req.body: ",req.body," req.queryResult: ", req.queryResult," req.responseId: ",req.responseId);
     // console.log("/coffee called with req.query: ",req.query);
+    console.log("/coffee called with req.queryResult.parameters: ",req.body.queryResult.parameters);    
+    console.log("/coffee called with req.queryResult.parameters.weight: ",req.body.queryResult.parameters.weight);    
+    console.log("/coffee called with req.queryResult.parameters.weight[amount]: ",req.body.queryResult.parameters.weight.amount);    
 
     res.status(200).send('coffee: '+req.query);
 
     axios.post('http://bme680.local:3001/coffee', {
-      grams: req.query.grams
+      // grams: req.query.grams
+      grams: req.body.queryResult.parameters.weight.amount
     })
     .then((res) => {
       console.log(`statusCode: ${res.statusCode}`);
@@ -243,7 +248,6 @@ app.post('/coffeecoffee', function(req,res,next){
     })
 
 })
-
 
 // app.get('/test/500', function(req, res, next) {
 //     if (app.get('env') === 'development') {
