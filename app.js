@@ -233,7 +233,7 @@ app.post('/coffeecoffee', function(req,res,next){
     console.log("/coffee called with req.queryResult.parameters.weight: ",req.body.queryResult.parameters.weight);    
     console.log("/coffee called with req.queryResult.parameters.weight[amount]: ",req.body.queryResult.parameters.weight.amount);    
 
-    res.status(200).send('coffee: '+req.query);
+    res.status(200).send('sharelock.gelsey.com/coffee received this query: '+req.query);
 
     if (typeof req.body.queryResult.parameters.weight.amount != 'undefined') 
         axios.post('http://bme680.local:3001/coffee', {
@@ -241,7 +241,7 @@ app.post('/coffeecoffee', function(req,res,next){
           grams: req.body.queryResult.parameters.weight.amount
         })
         .then((res) => {
-          console.log(`statusCode: ${res.statusCode}`);
+          console.log(`status: ${res.status}  ${res.statusText}`);
           // console.log(res);
         })
         .catch((error) => {
