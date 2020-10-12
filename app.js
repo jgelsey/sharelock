@@ -236,7 +236,7 @@ app.post('/coffeecoffee', function(req,res,next){
     res.status(200).send('sharelock.gelsey.com/coffee received this query: '+req.query);
 
     if (typeof req.body.queryResult.parameters.weight.amount != 'undefined') 
-        axios.post('http://bme680.local:3001/coffee', {
+        axios.post('http://bme680:3001/coffee', {
           // grams: req.query.grams
           grams: req.body.queryResult.parameters.weight.amount
         })
