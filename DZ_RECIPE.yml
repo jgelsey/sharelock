@@ -1,0 +1,20 @@
+dev:
+  commands:
+    - command: npm install
+      directory: sharelock
+      name: install cmd
+  name: sharelock2
+  packages:
+    - nixpkgs.nodejs_21
+  repos:
+    - https://github.com/jgelsey/sharelock
+compute:
+  compute_name: default
+  os_family: UBUNTU_22_04
+  region: us-west-1
+  resources:
+    cpus: 4+
+    disk: 50
+network:
+  category: vm-public
+  network_name: default
