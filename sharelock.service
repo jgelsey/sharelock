@@ -1,0 +1,13 @@
+[Unit]
+Description=Sharelock
+After=network-online.target
+
+[Service]
+User=sharelock
+Group=sharelock
+Restart=always
+WorkingDirectory=/opt/node-apps/sharelock/
+ExecStart=/usr/bin/node /opt/node-apps/sharelock/server.js
+
+[Install]
+WantedBy=multi-user.target

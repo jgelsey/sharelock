@@ -15,29 +15,29 @@ var express = require('express')
 
 const axios = require('axios');
 
-const Airbrake = require('@airbrake/node');
-const airbrakeExpress = require('@airbrake/node/dist/instrumentation/express');
+//const Airbrake = require('@airbrake/node');
+//const airbrakeExpress = require('@airbrake/node/dist/instrumentation/express');
 
-const airbrake = new Airbrake.Notifier({
-  projectId: process.env.AIRBRAKE_PROJECT_ID,
-  projectKey: process.env.AIRBRAKE_PROJECT_KEY,
-  environment: 'production'
-});
+//const airbrake = new Airbrake.Notifier({
+//  projectId: process.env.AIRBRAKE_PROJECT_ID,
+//  projectKey: process.env.AIRBRAKE_PROJECT_KEY,
+//  environment: 'production'
+//});
 
 // Airbrake.add_performance_filter do |resource|
 //   resource.ignore! if resource.route =~ %r{/health_check}
 // end
 
-airbrake.addFilter(function(resource) { //attempt to add an airbrake filter to the performance reporting
-    // console.error("resource: ", resource);
-    // logger.warn("resource: ", resource);
-    if (resource.route == '/pingdom') {
-        resource.ignore=1;
-        console.log("resource.route :",resource.route);
-    }
-    return null;
-  }
-  );
+//airbrake.addFilter(function(resource) { //attempt to add an airbrake filter to the performance reporting
+//    // console.error("resource: ", resource);
+//    // logger.warn("resource: ", resource);
+//    if (resource.route == '/pingdom') {
+//        resource.ignore=1;
+//        console.log("resource.route :",resource.route);
+//    }
+//    return null;
+//  }
+//  );
 
 // console.log("Airbrake: ", Airbrake);
 // console.log("airbrake._filters.nodeFilter: ", airbrake._filters.nodeFilter);
@@ -146,8 +146,8 @@ app.use(express.static(path.join(__dirname, 'public'), { index: false, redirect:
 app.use(contextualLocals);
 
 // This middleware should be added before any routes are defined:
-app.use(airbrakeExpress.makeMiddleware(airbrake));
-app.use(airbrakeExpress.makeErrorHandler(airbrake));
+//app.use(airbrakeExpress.makeMiddleware(airbrake));
+//app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
 app.get('/', function (req, res, next) {
     visitor.pageview("/", "https://sharelock.gelsey.com", "Securely share data").send();
